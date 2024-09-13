@@ -1,21 +1,19 @@
 package com.example.mystore.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.mystore.R
+import com.example.mystore.databinding.ActivityLoginRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginRegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login_register)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityLoginRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+
     }
 }
