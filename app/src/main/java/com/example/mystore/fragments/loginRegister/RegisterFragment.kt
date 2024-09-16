@@ -14,10 +14,13 @@ import androidx.lifecycle.lifecycleScope
 import com.example.mystore.R
 import com.example.mystore.data.User
 import com.example.mystore.databinding.FragmentRegisterBinding
+import com.example.mystore.util.RegisterValidation
 import com.example.mystore.util.Resource
 import com.example.mystore.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private val TAG = "RegisterFragment"
 @AndroidEntryPoint
@@ -45,15 +48,10 @@ class RegisterFragment: Fragment() {
                     edLastName.text.toString().trim(),
                     edEmailRegister.text.toString().trim()
                 )
+
                 val password = edPasswordRegister.text.toString()
+                viewModel.createAccountWithEmailAndPassword(user, password)
 
-                if (password.isNotEmpty()) {
-                    Toast.makeText(context, "Registrando, por favor aguarde...", Toast.LENGTH_SHORT).show()
-                    viewModel.createAccountWithEmailAndPassword(user, password)
-                } else {
-
-                    Toast.makeText(context, "Por favor, insira uma senha.", Toast.LENGTH_SHORT).show()
-                }
             }
         }
 
@@ -80,5 +78,27 @@ class RegisterFragment: Fragment() {
             }
         }
 
+        lifecycleScope.launchWhenStarted {
+            viewModel.validation.collect{ validation ->
+                if (validation.email is RegisterValidation.Failed){
+                    withContext(Dispatchers.Main){
+                        binding.edEmailRegister.apply {
+                            requestFocus()
+                            error = validation.email.message
+                        }
+                    }
+                }
+
+                if (validation.password is RegisterValidation.Failed){
+                    withContext(Dispatchers.Main){
+                        binding.edPasswordRegister.apply {
+                            requestFocus()
+                            error = validation.password.message
+                        }
+                }
+            }
+        }
+
+    }
     }
 }
