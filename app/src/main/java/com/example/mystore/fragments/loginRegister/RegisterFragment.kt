@@ -5,13 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.mystore.R
 import com.example.mystore.data.User
 import com.example.mystore.databinding.FragmentRegisterBinding
 import com.example.mystore.util.RegisterValidation
@@ -22,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val TAG = "RegisterFragment"
+private const val TAG = "RegisterFragment"
 @AndroidEntryPoint
 class RegisterFragment: Fragment() {
 
@@ -78,7 +75,7 @@ class RegisterFragment: Fragment() {
             }
         }
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.validation.collect{ validation ->
                 if (validation.email is RegisterValidation.Failed){
                     withContext(Dispatchers.Main){
