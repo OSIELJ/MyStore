@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.mystore.R
 import com.example.mystore.data.User
 import com.example.mystore.databinding.FragmentRegisterBinding
 import com.example.mystore.util.RegisterValidation
@@ -37,6 +39,10 @@ class RegisterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.tvDoYouHaveAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
+        }
 
         binding.apply {
             btnRegisterRegister.setOnClickListener {
