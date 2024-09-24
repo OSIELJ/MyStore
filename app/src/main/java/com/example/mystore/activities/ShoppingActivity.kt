@@ -12,7 +12,7 @@ import com.example.mystore.databinding.ActivityShoppingBinding
 
 class ShoppingActivity : AppCompatActivity() {
 
-    val binding by lazy {
+    private val binding by lazy {
         ActivityShoppingBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
